@@ -1,4 +1,4 @@
-# -*- mode: ruby -*-
+install_nodejs.sh# -*- mode: ruby -*-
 # vi: set ft=ruby :
 
 
@@ -30,7 +30,25 @@ Vagrant.configure("2") do |config|
     main.vm.provision :shell, :path => "./shell/install_ansible.sh"
     main.vm.provision :shell, :path => "./shell/install_ubuntu_desktop.sh"
     main.vm.provision :shell, :path => "./shell/install_virtualbox_additions.sh"
-    main.vm.provision :shell, :path => "./shell/install_chrome.sh"    
+    main.vm.provision :shell, :path => "./shell/install_chrome.sh"
+    main.vm.provision :shell, :path => "./shell/install_nodejs.sh"
+  end
+  # sandbox01
+  config.vm.define "sandbox01" do |sandbox01|
+    # Set Image
+    sandbox01.vm.box = "ubuntu/xenial64"
+    sandbox01.disksize.size = "100GB"
+    sandbox01.vm.provider "virtualbox" do |vb|
+      vb.memory = 2048
+    end
+    sandbox01.vm.network "private_network", ip: "10.56.0.101", virtualbox__intnet: "local"
+    sandbox01.vm.network "private_network", ip: "10.33.0.101"
+    sandbox01.vm.provision "shell", inline: <<-SHELL
+      mkdir /mnt/shared #=> root
+      mount -t vboxsf vagrant /mnt/shared #=> root
+    SHELL
+    sandbox01.vm.provision :shell, :path => "./shell/useradd.sh"
+    sandbox01.vm.provision :shell, :path => "./shell/install_virtualbox_additions.sh"
   end
   # redis01
   config.vm.define "redis01" do |redis01|
