@@ -32,4 +32,22 @@ Vagrant.configure("2") do |config|
     main.vm.provision :shell, :path => "./shell/install_virtualbox_additions.sh"
     main.vm.provision :shell, :path => "./shell/install_chrome.sh"    
   end
+  # redis01
+  config.vm.define "redis01" do |redis01|
+    # Set Image
+    redis01.vm.box = "ubuntu/xenial64"
+    redis01.disksize.size = "100GB"
+    redis01.vm.provider "virtualbox" do |vb|
+      vb.memory = 2048
+    end
+    redis01.vm.network "private_network", ip: "10.56.11.11", virtualbox__intnet: "local"
+    redis01.vm.network "private_network", ip: "10.33.11.11"
+    redis01.vm.provision "shell", inline: <<-SHELL
+      mkdir /mnt/shared #=> root
+      mount -t vboxsf vagrant /mnt/shared #=> root
+    SHELL
+    redis01.vm.provision :shell, :path => "./shell/useradd.sh"
+    redis01.vm.provision :shell, :path => "./shell/install_virtualbox_additions.sh"
+    redis01.vm.provision :shell, :path => "./shell/install_redis-server.sh"
+  end
 end
