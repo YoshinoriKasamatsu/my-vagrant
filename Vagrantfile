@@ -1,4 +1,4 @@
-install_nodejs.sh# -*- mode: ruby -*-
+# -*- mode: ruby -*-
 # vi: set ft=ruby :
 
 
@@ -32,6 +32,7 @@ Vagrant.configure("2") do |config|
     main.vm.provision :shell, :path => "./shell/install_virtualbox_additions.sh"
     main.vm.provision :shell, :path => "./shell/install_chrome.sh"
     main.vm.provision :shell, :path => "./shell/install_nodejs.sh"
+    main.vm.provision :shell, :path => "./shell/install_vscode.sh"
   end
   # sandbox01
   config.vm.define "sandbox01" do |sandbox01|
