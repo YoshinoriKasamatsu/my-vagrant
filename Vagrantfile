@@ -1,4 +1,4 @@
-install_nodejs.sh# -*- mode: ruby -*-
+# -*- mode: ruby -*-
 # vi: set ft=ruby :
 
 
