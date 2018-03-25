@@ -69,4 +69,22 @@ Vagrant.configure("2") do |config|
     redis01.vm.provision :shell, :path => "./shell/install_virtualbox_additions.sh"
     redis01.vm.provision :shell, :path => "./shell/install_redis-server.sh"
   end
+  # nginx01
+  config.vm.define "nginx01" do |nginx01|
+    # Set Image
+    nginx01.vm.box = "ubuntu/xenial64"
+    nginx01.disksize.size = "100GB"
+    nginx01.vm.provider "virtualbox" do |vb|
+      vb.memory = 2048
+    end
+    nginx01.vm.network "private_network", ip: "10.56.21.11", virtualbox__intnet: "local"
+    nginx01.vm.network "private_network", ip: "10.33.21.11"
+    nginx01.vm.provision "shell", inline: <<-SHELL
+      mkdir /mnt/shared #=> root
+      mount -t vboxsf vagrant /mnt/shared #=> root
+    SHELL
+    nginx01.vm.provision :shell, :path => "./shell/useradd.sh"
+    nginx01.vm.provision :shell, :path => "./shell/install_virtualbox_additions.sh"
+    nginx01.vm.provision :shell, :path => "./shell/install_nginx.sh"
+  end
 end
