@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
     main.vm.box = "ubuntu/xenial64"
     main.disksize.size = "100GB"
     main.vm.provider "virtualbox" do |vb|
-      vb.memory = 4096
+      vb.memory = 8192
       vb.gui = true
       vb.customize [
         "modifyvm", :id,
