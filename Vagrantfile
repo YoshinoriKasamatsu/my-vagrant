@@ -51,6 +51,19 @@ Vagrant.configure("2") do |config|
     sandbox01.vm.provision :shell, :path => "./shell/useradd.sh"
     sandbox01.vm.provision :shell, :path => "./shell/install_virtualbox_additions.sh"
   end
+  # mysql5.7
+  config.vm.define "mysql57" do |mysql57|
+    mysql57.vm.box = "ubuntu/xenial64"
+    mysql57.vm.network "private_network", ip: "10.56.0.31", virtualbox__intnet: "local"
+    mysql57.vm.network "private_network", ip: "10.33.0.31"
+    mysql57.vm.provision "shell", inline: <<-SHELL
+      mkdir /mnt/shared #=> root
+      mount -t vboxsf vagrant /mnt/shared #=> root
+    SHELL
+    mysql57.vm.provision :shell, :path => "./shell/useradd.sh"
+    mysql57.vm.provision :shell, :path => "./shell/install_python.sh"
+  end
+
   # redis01
   config.vm.define "redis01" do |redis01|
     # Set Image
