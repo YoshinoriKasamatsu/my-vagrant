@@ -11,7 +11,8 @@ Vagrant.configure("2") do |config|
     main.disksize.size = "100GB"
     main.vm.provider "virtualbox" do |vb|
       vb.memory = 8192
-      vb.gui = true
+      #vb.gui = true
+      vb.gui = false
       vb.customize [
         "modifyvm", :id,
         "--vram", "256",
