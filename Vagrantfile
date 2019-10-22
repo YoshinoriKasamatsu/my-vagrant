@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
       vb.customize [
         "modifyvm", :id,
         "--vram", "256",
-        "--accelerate3d", "on",
+        "--accelerate3d", "off",
       ]      
     end
     main.vm.network "private_network", ip: "10.56.0.11", virtualbox__intnet: "local"
