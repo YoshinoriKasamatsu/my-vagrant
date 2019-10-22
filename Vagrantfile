@@ -20,6 +20,7 @@ Vagrant.configure("2") do |config|
     end
     main.vm.network "private_network", ip: "10.56.0.11", virtualbox__intnet: "local"
     main.vm.network "private_network", ip: "10.33.0.11"
+    main.vm.network "public_network"
     main.vm.provision "shell", inline: <<-SHELL
       mkdir /mnt/shared #=> root
       mount -t vboxsf vagrant /mnt/shared #=> root
